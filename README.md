@@ -52,6 +52,16 @@ Add your provider API key and choose your models, then start a session with what
 
 All three platforms support in-app updates.
 
+### Use your Claude subscription (this fork)
+
+You can run LearnHarness on a Claude Pro or Max subscription instead of a paid Anthropic API key:
+
+1. Install [Claude Code](https://claude.com/claude-code) and run `claude setup-token`. Sign in with your Claude account; it prints a long-lived token that starts with `sk-ant-oat`.
+2. In LearnHarness, open **Settings → Keys → + Add provider key → Anthropic** and paste the token.
+3. Pick Claude models for the agent slots in **Settings → Agent**.
+
+The token is recognized by its `sk-ant-oat` prefix and sent as subscription auth, so usage counts against your plan's limits rather than API billing. The cost meter still shows what the same usage would cost at API prices. Anthropic's terms limit using a consumer subscription outside its own apps, so use this at your own risk.
+
 ## Your keys, your data
 
 - **Your keys and models.** No LearnHarness subscription or markup. You pay your providers for usage; a live cost meter shows model costs.
