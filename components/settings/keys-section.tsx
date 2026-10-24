@@ -104,6 +104,14 @@ export function keyStatusLine(status: AuthKeyStatus): string {
 	return `${tail} · ${chars}${status.source === "env" ? " · env" : ""}`;
 }
 
+/** The paste field's placeholder for one key (fork: Claude subscription).
+ *  The Anthropic field also takes a Claude Pro/Max subscription token from
+ *  `claude setup-token` — pi-ai sees the sk-ant-oat prefix and switches to
+ *  subscription (OAuth) auth on its own. Pure — exported for tests. */
+export function keyPlaceholder(envVar: string): string {
+	return envVar === "ANTHROPIC_API_KEY" ? "Paste API key or Claude subscription token (sk-ant-oat…)" : "Paste key…";
+}
+
 /** One table row: label left, tiny docs link + status right. Writable
  *  rows click-unfold an editor beneath (owner interaction); env-owned
  *  rows are dimmed and read-only (a paste box there would mislead). */
@@ -162,7 +170,7 @@ function KeyTableRow({
 						onKeyDown={(e) => {
 							if (e.key === "Enter") void save();
 						}}
-						placeholder="Paste key…"
+						placeholder={keyPlaceholder(status.id)}
 						aria-label={`${label} key`}
 						data-testid={`${testid}-input`}
 						disabled={busy}
@@ -510,7 +518,7 @@ function AddProviderEditor({
 				onKeyDown={(e) => {
 					if (e.key === "Enter" && value.trim()) onSave(value);
 				}}
-				placeholder="Paste key…"
+				placeholder={keyPlaceholder(provider.envVar)}
 				aria-label={`${provider.label} key`}
 				data-testid={`key-${provider.id}-input`}
 				autoFocus
