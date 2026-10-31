@@ -1,0 +1,14 @@
+# Unsigned local build (desktop:dist:local) — for running a personal copy
+# from /Applications without the owner's Developer ID or notary profile.
+# Ad-hoc signed (Apple Silicon refuses fully unsigned binaries), not
+# notarized, DMG only (--mac dmg), and no update feed: without
+# app-update.yml the updater logs one error and stays idle, so a local
+# build is never replaced by an upstream release.
+extends: electron-builder.yml
+mac:
+  identity: "-"
+  notarize: false
+  # Ad-hoc + hardened runtime trips library validation at launch (the
+  # signature has no Team ID to match the bundled frameworks against).
+  hardenedRuntime: false
+publish: null
